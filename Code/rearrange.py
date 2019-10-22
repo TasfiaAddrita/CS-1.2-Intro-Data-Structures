@@ -8,7 +8,10 @@ def reverse_word(word):
     return word[::-1]
 
 def reverse_sentences(sen_list):
-    return
+    reverse = []
+    for word in range(len(sen_list), 0, -1):
+        reverse.append(sen_list[word-1])
+    return reverse
 
 params = sys.argv[1:]
 # print(params)
@@ -21,3 +24,6 @@ print(ran_params_string)
 
 rev_word = reverse_word(random.choice(ran_params))
 print(rev_word)
+
+rev_sen = reverse_sentences(ran_params)
+print(rev_sen)
