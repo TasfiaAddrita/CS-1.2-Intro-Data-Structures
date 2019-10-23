@@ -17,7 +17,11 @@ def fisher_yates(list_):
 #     return fisher_yates(params_list)
 
 def reverse_word(word):
-    return word[::-1]
+    # return word[::-1]
+    reverse = ""
+    for letter in range(len(word), 0, -1):
+        reverse += letter
+    return reverse
 
 def reverse_sentences(sen_list):
     reverse = []
