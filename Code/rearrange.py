@@ -47,14 +47,14 @@ params = sys.argv[1:]
 ran_params = fisher_yates(params)
 ran_params_string = ""
 for param in ran_params:
-    ran_params_string += param + " "
+    ran_params_string += str(param) + " "
 print(ran_params_string)
 
-rev_word = reverse_word(ran_params[randint(0, len(ran_params) - 1)])
-print(rev_word)
+# rev_word = reverse_word(ran_params[randint(0, len(ran_params) - 1)])
+# print(rev_word)
 
-rev_sen = reverse_sentences(ran_params)
-print(rev_sen)
+# rev_sen = reverse_sentences(ran_params)
+# print(rev_sen)
 
 # ana_word = anagram("randomize")
 # print(ana_word)
