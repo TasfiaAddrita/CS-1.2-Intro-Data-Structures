@@ -26,10 +26,19 @@ def histogram(source_text):
     return histogram
 
 def unique_words(histogram):
-    pass
+    # easy
+    return len(histogram.keys())
+
+    # low-level attempt
+    # count = 0
+    # for word in histogram:
+    #     count += 1
+    
+    # return count
 
 def frequency(word, histogram):
     pass
 
 if __name__ == "__main__":
-    print(histogram('three_wishes.txt'))
+    hist = histogram('test.txt')
+    print(unique_words(hist))
