@@ -37,8 +37,9 @@ def unique_words(histogram):
     # return count
 
 def frequency(word, histogram):
-    pass
+    return histogram[word]
 
 if __name__ == "__main__":
     hist = histogram('test.txt')
     print(unique_words(hist))
+    print(frequency('hi', hist))
