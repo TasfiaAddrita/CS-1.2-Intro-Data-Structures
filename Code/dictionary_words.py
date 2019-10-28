@@ -1,5 +1,5 @@
 import sys
-from random import randint, choice
+from random import randint, choice, randrange
 import time
 
 def time_it(func):
@@ -26,8 +26,8 @@ def random_words(num_words):
     ran_words = []
     dict_words = 0
     while dict_words < int(num_words):
-        ran_words.append(word_list[randint(0, len(word_list)-1)])
-        # ran_words.append(choice(word_list))
+        # ran_words.append(word_list[randint(0, len(word_list)-1)])
+        ran_words.append(word_list[randrange(len(word_list))])
         dict_words += 1
 
     return ' '.join(ran_words)
