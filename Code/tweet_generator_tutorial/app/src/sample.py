@@ -1,5 +1,6 @@
 import random
-import histogram
+# import histogram
+from src.histogram import histogram_dict
 import sys
 
 def random_word(source_text):
@@ -10,11 +11,12 @@ def get_freq_percent(word_occurance):
     return word_occurance / len(words_list)
 
 def get_word_distribution(words_list):
-    histo = histogram.histogram_dict(words_list)
+    histo = histogram_dict(words_list)
     word_distribution = {}
     range_start = 0
     for word in histo:
-        freq_percent = get_freq_percent(histo[word])
+        # freq_percent = get_freq_percent(histo[word])
+        freq_percent = histo[word] / len(words_list)
         word_distribution[word] = [range_start, range_start + freq_percent]
         range_start += freq_percent
     
