@@ -3,8 +3,6 @@ from flask import Flask, render_template, request, redirect, url_for
 # from bson.objectid import ObjectId
 import os
 from datetime import datetime
-from src.histogram import *
-from src.sample import * 
 
 # local deployment
 # client = MongoClient()
@@ -15,9 +13,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    words_list = get_words('text/test.txt')
-    random_word = sample(words_list)
-    return render_template('index.html', word=random_word)
+    # return '<h1>I work</h1>'
 
 if __name__ == '__main__':
     app.run(debug=True, port=os.environ.get('PORT', 5000))
