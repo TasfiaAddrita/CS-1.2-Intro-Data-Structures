@@ -1,6 +1,7 @@
 import sys
 from random import randint
 
+# shuffles list
 def fisher_yates(list_):
     last_index = len(list_) - 1
     while last_index > 0:
@@ -19,8 +20,8 @@ def fisher_yates(list_):
 def reverse_word(word):
     # return word[::-1]
     reverse = ""
-    for letter in range(len(word), 0, -1):
-        reverse += letter
+    for letter in range(len(word)-1, -1, -1):
+        reverse += word[letter]
     return reverse
 
 def reverse_sentences(sen_list):
@@ -41,20 +42,20 @@ def anagram(word):
         ana_word = ""
     return ana_list
 
-params = sys.argv[1:]
+# params = sys.argv[1:]
 # # print(params)
 
-ran_params = fisher_yates(params)
-ran_params_string = ""
-for param in ran_params:
-    ran_params_string += str(param) + " "
-print(ran_params_string)
+# ran_params = fisher_yates(params)
+# ran_params_string = ""
+# for param in ran_params:
+#     ran_params_string += str(param) + " "
+# print(ran_params_string)
 
-# rev_word = reverse_word(ran_params[randint(0, len(ran_params) - 1)])
+# rev_word = reverse_word(params[randint(0, len(params) - 1)])
 # print(rev_word)
 
-# rev_sen = reverse_sentences(ran_params)
+# rev_sen = reverse_sentences(params)
 # print(rev_sen)
 
-# ana_word = anagram("randomize")
-# print(ana_word)
+ana_word = anagram("abcd")
+print(ana_word)
