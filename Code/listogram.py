@@ -56,6 +56,21 @@ class Listogram(list):
         """Return a word from this histogram, randomly sampled by weighting
         each word's probability of being chosen by its observed frequency."""
         # TODO: Randomly choose a word based on its frequency in this histogram
+        word_distribution = []
+        range_start = 0
+        for word in self:
+            freq_percent = word[1] / self.tokens
+            word_distribution.append([word[0], [range_start, range_start + freq_percent]])
+            range_start += freq_percent
+
+        ran_num = random.random()
+        for index in range(len(word_distribution)):
+            if word_distribution[index][1][0] <= ran_num <= word_distribution[index][1][1]:
+                return word_distribution[index][0]
+
+        # for word in word_distribution:
+        #     if word[1] <= ran_num <= word[2]:
+        #         return word[0]
 
 def print_histogram(word_list):
     print()
