@@ -3,6 +3,19 @@
 from __future__ import division, print_function  # Python 2 and 3 compatibility
 import random
 
+# source https://thispointer.com/python-how-to-make-a-class-iterable-create-iterator-class-for-it/
+class ListogramIterator:
+    def __init__(self, listogram):
+        self._listogram = listogram
+        self._index = 0
+    
+    def __next__(self):
+        if self._index < len(self._listogram):
+            result = self._listogram[self._index]
+            self._index += 1
+            return result
+        raise StopIteration
+
 class Listogram(list):
     """Listogram is a histogram implemented as a subclass of the list type."""
 
@@ -71,6 +84,35 @@ class Listogram(list):
         # for word in word_distribution:
         #     if word[1] <= ran_num <= word[2]:
         #         return word[0]
+
+    def __iter__(self):
+        return ListogramIterator(self)
+
+class SortedListogram(Listogram):
+    def __init__(self, word_list=None):
+        """Initialize this histogram as a new list and count given words."""
+        super(SortedListogram, self).__init__(word_list)
+
+    def add_count(self, word, count=1):
+        if self.__contains__(word):
+            self[self.index_of(word)][1] += count
+        else:
+            if len(self) == 0:
+                self.append([word, count])
+                self.types += 1
+            else:
+                if word < self[0][0]:
+                    self.insert(0, [word, count])
+                elif word > self[len(self)-1][0]:
+                    self.append([word, count])
+                else:
+                    index = 0
+                    while word > self[index][0]:
+                        index += 1
+                    self.insert(index, [word, count])
+
+        self.tokens += count
+        
 
 def print_histogram(word_list):
     print()
@@ -144,3 +186,14 @@ def main():
 
 if __name__ == '__main__':
     main()
+    word_list = ['derp', 'geez', 'haha', 'lol', 'sup', 'life']
+    word_list = 'xyzfghjabcfgiaye'
+    sorted_listo = SortedListogram(word_list)
+    print('sorted histogram', sorted_listo)
+    print()
+
+    fish_text = 'one fish two fish red fish blue fish'
+    histogram = Listogram(fish_text.split())
+    for word in histogram:
+        freq = histogram.frequency(word[0])
+        print('{} occurs {} times'.format(word[0], freq))
