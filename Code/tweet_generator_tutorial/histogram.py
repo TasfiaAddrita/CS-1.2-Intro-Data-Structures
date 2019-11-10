@@ -48,10 +48,16 @@ def histogram_tuple(words):
                 histogram.remove(w)
         if in_tuple == False:
             histogram.append((word, 1))
-        # print(count, histogram)
-        # print(count)
         
     return histogram
+
+def histogram_counts(words):
+    histograms = []
+    in_count = False
+
+    for word in words:
+        for histo in histograms:
+            pass
 
 def unique_words(histogram):
     return len(histogram.keys())
@@ -67,7 +73,7 @@ def frequency(word, histogram):
     return histogram[word]
 
 if __name__ == "__main__":
-    words = get_words('test.txt')
+    words = get_words('text/test.txt')
     hist_dict = histogram_dict(words)
     # print(histogram_list(words))
     print(histogram_tuple(words))
