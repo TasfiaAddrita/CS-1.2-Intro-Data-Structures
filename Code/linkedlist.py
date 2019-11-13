@@ -1,5 +1,19 @@
 #!python
 
+class LinkedListIterator:
+    def __init__(self, linked_list):
+        self._linked_list = linked_list
+        self._index = 0
+        self.current = self._linked_list.head
+    
+    def __next__(self):
+
+        if self._index < self._linked_list.length():
+            result = self.current
+            self.current = result.next
+            self._index += 1
+            return result.data
+        raise StopIteration
 
 class Node(object):
 
@@ -171,6 +185,9 @@ class LinkedList(object):
             current.next = current_next
             prev.next = current
 
+    def __iter__(self):
+        return LinkedListIterator(self)
+
 def test_linked_list():
     ll = LinkedList()
     print('list: {}'.format(ll))
@@ -234,4 +251,9 @@ def test_linked_list():
 
 
 if __name__ == '__main__':
-    test_linked_list()
+    # test_linked_list()
+
+    # iterable test
+    # ll = LinkedList([1, 6, 3, 8, 7])
+    # for item in ll:
+    #     print(item)
