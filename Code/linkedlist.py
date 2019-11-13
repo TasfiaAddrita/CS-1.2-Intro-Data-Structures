@@ -113,11 +113,14 @@ class LinkedList(object):
         # TODO: Otherwise raise error to tell user that delete has failed
         # Hint: raise ValueError('Item not found: {}'.format(item))
 
+        # if list is empty
         if self.length() == 0:
-            raise ValueError('Item not found: {}'.format(item))
+            raise ValueError('No items in list')
+        # if list has only one Node (has to be head)
         elif self.head.data == item and self.length() == 1:
             self.head = None
             self.tail = None
+        # if head's data is equal to item
         elif self.head.data == item:
             new_head = self.head.next
             self.head.next = None
@@ -127,14 +130,46 @@ class LinkedList(object):
             while current.data != item:
                 prev = current
                 current = current.next
+                # if current reaches last Node
                 if current is None:
                     raise ValueError('Item not found: {}'.format(item))
-            if current.data == item:
-                new_next_node = current.next
-                if new_next_node is None:
-                    self.tail = prev
-                current.next = None
-                prev.next = new_next_node
+            new_next_node = current.next
+            # if last Node's data equal to item
+            if new_next_node is None:
+                self.tail = prev
+            current.next = None
+            prev.next = new_next_node
+
+    def replace(self, item, new_value):
+        current = self.head
+        replace_node = Node(new_value)
+        
+        # if list is empty
+        if self.length() == 0:
+            raise ValueError('No items in list')
+        # if list has only one Node (has to be head)
+        elif self.head.data == item and self.length() == 1:
+            self.head = replace_node
+            self.tail = replace_node
+        # if head's data is equal to item
+        elif self.head.data == item:
+            head_next = self.head.next
+            self.head = replace_node
+            self.head.next = head_next
+        else:
+            current = self.head
+            while current.data != item:
+                prev = current
+                current = current.next
+                # if current reaches last Node
+                if current is None:
+                    raise ValueError('Item not found. Abort replace.')
+            current_next = current.next
+            if current_next is None:
+                self.tail = replace_node
+            current = replace_node
+            current.next = current_next
+            prev.next = current
 
 def test_linked_list():
     ll = LinkedList()
@@ -150,11 +185,41 @@ def test_linked_list():
     print('tail: {}'.format(ll.tail))
     print('length: {}'.format(ll.length()))
 
+    # replace tests
     print()
-    print('FIND', ll.find(lambda x: x == 'B'))
+    print('before replace', ll)
+    ll.replace('A', 'D')
+    print('after replace', ll)
+
+    print('head: {}'.format(ll.head))
+    print('tail: {}'.format(ll.tail))
+    print('length: {}'.format(ll.length()))
+
+    print()
+    print('before replace', ll)
+    ll.replace('C', 'A')
+    print('after replace', ll)
+
+    print('head: {}'.format(ll.head))
+    print('tail: {}'.format(ll.tail))
+    print('length: {}'.format(ll.length()))
+
+    print()
+    print('before replace', ll)
+    ll.replace('B', 'C')
+    print('after replace', ll)
+
+    print('head: {}'.format(ll.head))
+    print('tail: {}'.format(ll.tail))
+    print('length: {}'.format(ll.length()))
+
+    print()
+    print('before replace', ll)
+    ll.replace('X', 'C')
+    print('after replace', ll)
 
     # Enable this after implementing delete method
-    delete_implemented = True
+    delete_implemented = False
     if delete_implemented:
         print('\nTesting delete:')
         for item in ['B', 'C', 'A']:
