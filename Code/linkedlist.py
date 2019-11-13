@@ -1,5 +1,17 @@
 #!python
 
+import time
+
+def time_it(func):
+    # Made wth love by Ben :heart: - DS2.3
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        end = time.time()
+        print(func.__name__ + ' took ' + str((end - start) * 10000) + ' ms\n')
+        return result
+    return wrapper
+
 class LinkedListIterator:
     def __init__(self, linked_list):
         self._linked_list = linked_list
@@ -33,6 +45,7 @@ class LinkedList(object):
         """Initialize this linked list and append the given items, if any."""
         self.head = None  # First node
         self.tail = None  # Last node
+        self.length = 0
         # Append given items
         if items is not None:
             for item in items:
@@ -66,7 +79,8 @@ class LinkedList(object):
         """Return a boolean indicating whether this linked list is empty."""
         return self.head is None
 
-    def length(self):
+    @time_it
+    def count(self):
         """Return the length of this linked list by traversing its nodes.
         TODO: Running time: O(???) Why and under what conditions?"""
         # TODO: Loop through all nodes and count one for each
@@ -76,6 +90,10 @@ class LinkedList(object):
             count += 1
             current = current.next
         return count
+
+    @time_it
+    def alt_length(self):
+        return self.length
 
     def append(self, item):
         """Insert the given item at the tail of this linked list.
@@ -89,6 +107,7 @@ class LinkedList(object):
         else:
             self.tail.next = new_node
             self.tail = self.tail.next
+        self.length += 1
 
     def prepend(self, item):
         """Insert the given item at the head of this linked list.
@@ -104,6 +123,7 @@ class LinkedList(object):
             prev_head = self.head
             self.head = new_node
             new_node.next = prev_head
+        self.length += 1
 
     def find(self, quality):
         """Return an item from this linked list satisfying the given quality.
@@ -254,6 +274,11 @@ if __name__ == '__main__':
     # test_linked_list()
 
     # iterable test
-    # ll = LinkedList([1, 6, 3, 8, 7])
+    ll = LinkedList([1, 6, 3, 8, 7])
     # for item in ll:
     #     print(item)
+    ll.append(10)
+    ll.prepend(20)
+    
+    ll.count()
+    ll.alt_length()
