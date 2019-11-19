@@ -134,7 +134,7 @@ class LinkedList(object):
         self.length += 1
 
     def find(self, quality):
-        """Return an item from this linked list satisfying the given quality.
+        """Return the first item from this linked list satisfying the given quality.
         TODO: Best case running time: O(???) Why and under what conditions?
         Answer: O(1) if first element fulfills quality condition
         TODO: Worst case running time: O(???) Why and under what conditions?
@@ -149,6 +149,7 @@ class LinkedList(object):
                 return None
         return current.data
 
+    # no need to reassign delete node's next, garbage collection
     def delete(self, item):
         """Delete the given item from this linked list, or raise ValueError.
         TODO: Best case running time: O(???) Why and under what conditions?
@@ -162,7 +163,7 @@ class LinkedList(object):
         # Hint: raise ValueError('Item not found: {}'.format(item))
 
         # if list is empty
-        if self.length() == 0:
+        if self.length == 0:
             raise ValueError('No items in list')
         # if list has only one Node (has to be head)
         elif self.head.data == item and self.length() == 1:
@@ -187,16 +188,17 @@ class LinkedList(object):
                 self.tail = prev
             current.next = None
             prev.next = new_next_node
+        self.length -= 1
 
     def replace(self, item, new_value):
         current = self.head
         replace_node = Node(new_value)
         
         # if list is empty
-        if self.length() == 0:
+        if self.length == 0:
             raise ValueError('No items in list')
         # if list has only one Node (has to be head)
-        elif self.head.data == item and self.length() == 1:
+        elif self.head.data == item and self.length == 1:
             self.head = replace_node
             self.tail = replace_node
         # if head's data is equal to item
