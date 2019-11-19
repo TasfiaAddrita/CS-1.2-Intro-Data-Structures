@@ -111,6 +111,11 @@ class HashTable(object):
         # TODO: If found, delete entry associated with given key
         # TODO: Otherwise, raise error to tell user delete failed
         # Hint: raise KeyError('Key not found: {}'.format(key))
+        bucket_index = self._bucket_index(key)
+        if self.contains(key):
+            self.buckets[bucket_index].delete((key, self.get(key)))
+        else:
+            raise KeyError('Key not found: {}'.format(key))
 
 
 def test_hash_table():
@@ -132,7 +137,7 @@ def test_hash_table():
     print('length: {}'.format(ht.length()))
 
     # Enable this after implementing delete method
-    delete_implemented = False
+    delete_implemented = True
     if delete_implemented:
         print('\nTesting delete:')
         for key in ['I', 'V', 'X']:

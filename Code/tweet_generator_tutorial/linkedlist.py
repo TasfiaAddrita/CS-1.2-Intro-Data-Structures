@@ -166,7 +166,7 @@ class LinkedList(object):
         if self.length == 0:
             raise ValueError('No items in list')
         # if list has only one Node (has to be head)
-        elif self.head.data == item and self.length() == 1:
+        elif self.head.data == item and self.length == 1:
             self.head = None
             self.tail = None
         # if head's data is equal to item
