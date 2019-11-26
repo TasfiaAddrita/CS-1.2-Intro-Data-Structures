@@ -2,6 +2,19 @@
 
 from linkedlist import LinkedList
 
+class HashTableIterator:
+    def __init__(self, hashtable):
+        self.ht = hashtable 
+        self.ht_index = 0
+    
+    def __next__(self):
+        if self.ht_index < self.ht.num_buckets():
+            result = self.ht.buckets[self.ht_index]
+            print(result)
+            for item in result:
+                yield item
+            self.ht_index += 1
+        raise StopIteration
 
 class HashTable(object):
 
@@ -9,6 +22,7 @@ class HashTable(object):
         """Initialize this hash table with the given initial size."""
         # Create a new list (used as fixed-size array) of empty linked lists
         self.buckets = [LinkedList() for _ in range(init_size)]
+        self.count = 0
 
     def __str__(self):
         """Return a formatted string representation of this hash table."""
@@ -19,10 +33,26 @@ class HashTable(object):
         """Return a string representation of this hash table."""
         return 'HashTable({!r})'.format(self.items())
 
+    # thanks ben
+    def __iter__(self):
+        # for bucket in self.buckets:
+        #     for item in bucket.items():
+        #         yield item
+        return HashTableIterator(self)
+
+    def __getitem__(self, key):
+        return self.get(key)
+
+    def __setitem__(self, key, value):
+        return self.set(key, value)
+
     def _bucket_index(self, key):
         """Return the bucket index where the given key would be stored."""
         # Calculate the given key's hash code and transform into bucket index
         return hash(key) % len(self.buckets)
+
+    def num_buckets(self):
+        return len(self.buckets)
 
     def keys(self):
         """Return a list of all keys in this hash table.
@@ -61,9 +91,13 @@ class HashTable(object):
         # TODO: Count number of key-value entries in each bucket
         count = 0
         for bucket in self.buckets:
-            for key, value in bucket.items():
-                count += 1
+            # for key, value in bucket.items():
+            #     count += 1
+            count += bucket.length_fast()
         return count
+    
+    def length_fast(self):
+        return self.count
 
     def contains(self, key):
         """Return True if this hash table contains the given key, or False.
@@ -102,6 +136,7 @@ class HashTable(object):
             self.buckets[bucket_index].replace((key, self.get(key)), (key, value))
         else:
             self.buckets[bucket_index].append((key, value))
+        self.count += 1
 
     def delete(self, key):
         """Delete the given key from this hash table, or raise KeyError.
@@ -114,6 +149,7 @@ class HashTable(object):
         bucket_index = self._bucket_index(key)
         if self.contains(key):
             self.buckets[bucket_index].delete((key, self.get(key)))
+            self.count -= 1
         else:
             raise KeyError('Key not found: {}'.format(key))
 
@@ -134,7 +170,8 @@ def test_hash_table():
         print('get({!r}): {!r}'.format(key, value))
 
     print('contains({!r}): {}'.format('X', ht.contains('X')))
-    print('length: {}'.format(ht.length()))
+    # print('length: {}'.format(ht length_slow()))
+    print('length: {}'.format(ht.length_fast()))    
 
     # Enable this after implementing delete method
     delete_implemented = True
@@ -146,8 +183,26 @@ def test_hash_table():
             print('hash table: {}'.format(ht))
 
         print('contains(X): {}'.format(ht.contains('X')))
-        print('length: {}'.format(ht.length()))
+        # print('length: {}'.format(ht length_slow()))
+        print('length: {}'.format(ht.length_fast()))
 
+def test_hash_table_2():
+    ht2 = HashTable(3)
+    for key, value in [('I', 1), ('V', 5), ('X', 10), ('L', 50), ('C', 100), ('D', 500), ('M', 1000)]:
+        ht2.set(key, value)
+    # print('hash table: {}'.format(ht2))
+    # print(ht2.keys())
+    # for key in ht2.keys():
+    #     print(ht2._bucket_index(key), ht2.get(key))
+    # print(ht2.length_fast())
+    # print(ht2.num_buckets())
+
+    # for item in ht2:
+    #     print(item)
+        # for node in ll:
+        #     print(node)
 
 if __name__ == '__main__':
-    test_hash_table()
+    pass
+    # test_hash_table()
+    # test_hash_table_2()

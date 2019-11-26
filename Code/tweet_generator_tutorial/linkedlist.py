@@ -19,8 +19,7 @@ class LinkedListIterator:
         self.current = self._linked_list.head
     
     def __next__(self):
-
-        if self._index < self._linked_list.length():
+        if self._index < self._linked_list.length_fast():
             result = self.current
             self.current = result.next
             self._index += 1
@@ -45,7 +44,7 @@ class LinkedList(object):
         """Initialize this linked list and append the given items, if any."""
         self.head = None  # First node
         self.tail = None  # Last node
-        self.length = 0
+        self.count = 0
         # Append given items
         if items is not None:
             for item in items:
@@ -59,6 +58,9 @@ class LinkedList(object):
     def __repr__(self):
         """Return a string representation of this linked list."""
         return 'LinkedList({!r})'.format(self.items())
+
+    def __iter__(self):
+        return LinkedListIterator(self)
 
     def items(self):
         """Return a list (dynamic array) of all items in this linked list.
@@ -80,7 +82,7 @@ class LinkedList(object):
         return self.head is None
 
     @time_it
-    def count(self):
+    def length(self):
         """Return the length of this linked list by traversing its nodes.
         TODO: Running time: O(???) Why and under what conditions?
         Answer:
@@ -95,9 +97,9 @@ class LinkedList(object):
             current = current.next
         return count
 
-    @time_it
-    def alt_length(self):
-        return self.length
+    # @time_it
+    def length_fast(self):
+        return self.count
 
     def append(self, item):
         """Insert the given item at the tail of this linked list.
@@ -113,7 +115,7 @@ class LinkedList(object):
         else:
             self.tail.next = new_node
             self.tail = self.tail.next
-        self.length += 1
+        self.count += 1
 
     def prepend(self, item):
         """Insert the given item at the head of this linked list.
@@ -131,7 +133,7 @@ class LinkedList(object):
             prev_head = self.head
             self.head = new_node
             new_node.next = prev_head
-        self.length += 1
+        self.count += 1
 
     def find(self, quality):
         """Return the first item from this linked list satisfying the given quality.
@@ -163,10 +165,10 @@ class LinkedList(object):
         # Hint: raise ValueError('Item not found: {}'.format(item))
 
         # if list is empty
-        if self.length == 0:
+        if self.count == 0:
             raise ValueError('No items in list')
         # if list has only one Node (has to be head)
-        elif self.head.data == item and self.length == 1:
+        elif self.head.data == item and self.count == 1:
             self.head = None
             self.tail = None
         # if head's data is equal to item
@@ -188,17 +190,17 @@ class LinkedList(object):
                 self.tail = prev
             current.next = None
             prev.next = new_next_node
-        self.length -= 1
+        self.count -= 1
 
     def replace(self, item, new_value):
         current = self.head
         replace_node = Node(new_value)
         
         # if list is empty
-        if self.length == 0:
+        if self.count == 0:
             raise ValueError('No items in list')
         # if list has only one Node (has to be head)
-        elif self.head.data == item and self.length == 1:
+        elif self.head.data == item and self.count == 1:
             self.head = replace_node
             self.tail = replace_node
         # if head's data is equal to item
@@ -220,9 +222,6 @@ class LinkedList(object):
             current = replace_node
             current.next = current_next
             prev.next = current
-
-    def __iter__(self):
-        return LinkedListIterator(self)
 
 def test_linked_list():
     ll = LinkedList()
@@ -296,5 +295,4 @@ if __name__ == '__main__':
     # ll.append(10)
     # ll.prepend(20)
     
-    # ll.count()
-    # ll.alt_length()
+    # ll.length_fast()
