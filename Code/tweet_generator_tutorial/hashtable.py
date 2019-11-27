@@ -2,20 +2,6 @@
 
 from linkedlist import LinkedList
 
-class HashTableIterator:
-    def __init__(self, hashtable):
-        self.ht = hashtable 
-        self.ht_index = 0
-    
-    def __next__(self):
-        if self.ht_index < self.ht.num_buckets():
-            result = self.ht.buckets[self.ht_index]
-            print(result)
-            for item in result:
-                yield item
-            self.ht_index += 1
-        raise StopIteration
-
 class HashTable(object):
 
     def __init__(self, init_size=8):
@@ -35,10 +21,9 @@ class HashTable(object):
 
     # thanks ben
     def __iter__(self):
-        # for bucket in self.buckets:
-        #     for item in bucket.items():
-        #         yield item
-        return HashTableIterator(self)
+        for bucket in self.buckets:
+            for item in bucket.items():
+                yield item
 
     def __getitem__(self, key):
         return self.get(key)
@@ -108,7 +93,6 @@ class HashTable(object):
         if self.buckets[bucket].is_empty() == False:
             return self.buckets[bucket].find(lambda item: item[0] == key) is not None
         return False
-
 
     def get(self, key):
         """Return the value associated with the given key, or raise KeyError.
@@ -197,12 +181,12 @@ def test_hash_table_2():
     # print(ht2.length_fast())
     # print(ht2.num_buckets())
 
-    # for item in ht2:
-    #     print(item)
+    for item in ht2:
+        print(item)
         # for node in ll:
         #     print(node)
 
 if __name__ == '__main__':
     pass
     # test_hash_table()
-    # test_hash_table_2()
+    test_hash_table_2()
