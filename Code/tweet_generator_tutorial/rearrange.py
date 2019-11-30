@@ -42,6 +42,9 @@ def anagram(word):
         ana_word = ""
     return ana_list
 
+def cowsay(self):
+    pass
+
 # params = sys.argv[1:]
 # # print(params)
 
