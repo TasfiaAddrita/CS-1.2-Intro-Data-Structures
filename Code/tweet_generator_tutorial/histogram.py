@@ -111,8 +111,8 @@ if __name__ == "__main__":
     # print(histogram_counts(words))
 
     hist_dict = histogram_dict(words)
-    # print(hist_dict)
-    write_histogram_file('histogram_file', hist_dict)
+    print(hist_dict)
+    # write_histogram_file('histogram_file', hist_dict)
 
     # hist_list = histogram_list(words)
     # print(hist_list)
