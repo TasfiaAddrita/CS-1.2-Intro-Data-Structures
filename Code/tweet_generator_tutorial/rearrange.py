@@ -14,11 +14,8 @@ def fisher_yates(list_):
     
     return list_
 
-# def random_params(params_list):
-#     return fisher_yates(params_list)
-
 def reverse_word(word):
-    # return word[::-1]
+    # return word[::-1] # high level attempt
     reverse = ""
     for letter in range(len(word)-1, -1, -1):
         reverse += word[letter]
@@ -30,35 +27,15 @@ def reverse_sentences(sen_list):
         reverse.append(sen_list[word-1])
     return reverse
 
-def anagram(word):
-    ana_list = []
-    ana_word = ""
-    for first_letter in range(len(word)):
-        ana_word += word[first_letter]
-        for other_letters in range(len(word)):
-            if other_letters != first_letter:
-                ana_word += word[other_letters]
-        ana_list.append(ana_word)
-        ana_word = ""
-    return ana_list
+# help from https://stackoverflow.com/questions/11989502/producing-all-the-anagrams-from-a-string-python
+def simple_anagram(elements):
+    if len(elements) <= 1:
+        return elements
+    else:
+        ans = []
+        for perm in simple_anagram(elements[1:]):
+            for index in range(len(elements)):
+                ans.append(perm[:index] + elements[0:1] + perm[index:])
+        return ans
 
-def cowsay(self):
-    pass
-
-# params = sys.argv[1:]
-# # print(params)
-
-# ran_params = fisher_yates(params)
-# ran_params_string = ""
-# for param in ran_params:
-#     ran_params_string += str(param) + " "
-# print(ran_params_string)
-
-# rev_word = reverse_word(params[randint(0, len(params) - 1)])
-# print(rev_word)
-
-# rev_sen = reverse_sentences(params)
-# print(rev_sen)
-
-ana_word = anagram("abcd")
-print(ana_word)
+# print(simple_anagram('abc'))
