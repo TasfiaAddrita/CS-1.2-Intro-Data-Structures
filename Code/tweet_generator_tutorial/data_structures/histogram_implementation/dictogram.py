@@ -35,7 +35,6 @@ class Dictogram(dict):
             return 0
         return self[word]
 
-    
     def sample(self):
         """Return a word from this histogram, randomly sampled by weighting
         each word's probability of being chosen by its observed frequency."""
