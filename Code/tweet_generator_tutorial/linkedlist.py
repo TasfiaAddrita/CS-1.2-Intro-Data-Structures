@@ -152,7 +152,7 @@ class LinkedList(object):
         return current.data
 
     # no need to reassign delete node's next, garbage collection
-    def delete(self, item):
+    def delete(self, item=None):
         """Delete the given item from this linked list, or raise ValueError.
         TODO: Best case running time: O(???) Why and under what conditions?
         Answer: O(1) if there are no nodes in the list or the head is equal to the value to be deleted
