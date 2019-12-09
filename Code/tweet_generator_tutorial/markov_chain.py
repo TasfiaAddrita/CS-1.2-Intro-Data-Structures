@@ -24,10 +24,10 @@ class MarkovChain(Dictogram):
                 self[tuple(tokens)] = Dictogram()
             try:
                 self[tuple(tokens)].add_count(words_list[index + 1])
-                tokens.enque(words_list[index + 1])
+                tokens.enqueue(words_list[index + 1])
             except:
                 self[tuple(tokens)] = Dictogram(['**STOP**'])
-            tokens.deque()
+            tokens.dequeue()
 
     def get_next_word(self, tokens):
         return self[tokens].sample()
@@ -46,15 +46,15 @@ class MarkovChain(Dictogram):
                 sentence.append(next_word)
                 break
             sentence.append(next_word)
-            tokens.deque()
-            tokens.enque(next_word)
+            tokens.dequeue()
+            tokens.enqueue(next_word)
             total_words += 1
         return ' '.join(sentence)
 
 if __name__ == '__main__':
-    text = 'text/fish.txt'
+    text = 'text/three_wishes.txt'
     words_list = histogram.get_words(text)
-    markov = MarkovChain(2)
+    markov = MarkovChain(4)
     # markov.build_state_histogram()
     # for key in markov:
     #     print(key, markov[key])
