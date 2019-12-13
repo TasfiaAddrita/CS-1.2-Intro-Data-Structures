@@ -1,5 +1,5 @@
 import histogram
-from data_structures.histogram_implementation.dictogram import Dictogram
+from dictogram import Dictogram
 from queue import Queue
 import sys
 import random

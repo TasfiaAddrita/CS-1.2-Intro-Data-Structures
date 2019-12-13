@@ -1,4 +1,4 @@
-from tweet_generator_tutorial.linkedlist import Node, LinkedList
+from linkedlist import Node, LinkedList
 
 class DoubleLinkedNode(Node):
     def __init__(self, data):
